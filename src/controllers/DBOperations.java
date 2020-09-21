@@ -217,7 +217,8 @@ public class DBOperations implements Operations {
     {
         Statement statement = null;
         Connection connection = null;
-        String pathImage = "C:\\Users\\corre\\Documents\\NetBeansProjects\\UsersManager\\image";
+        String username = System.getProperty("user.name");
+        String pathImage = "C:\\Users\\" + username + "\\Documents\\NetBeansProjects\\UsersManager\\image";
         
         try {
             Class.forName(database.getDriver());
@@ -236,7 +237,7 @@ public class DBOperations implements Operations {
                 InputStream input = test.getBinaryStream();
                 int size = input.available();
                 OutputStream output = new FileOutputStream(
-                        pathImage + id + ".jpg"
+                        pathImage + id + ".jpeg"
                 );
                 
                 byte b[] = new byte[size];

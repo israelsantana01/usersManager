@@ -11,12 +11,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Students;
 import net.sf.jasperreports.engine.JRException;
-import pages.AddStudent;
-import pages.EditStudent;
+import pages.StudentActions;
 import report.Report;
 
 public class StudentPage extends javax.swing.JFrame {
-    
+
     String columns[] = {"Id", "Nome", "Matéria", "Ano de entrada"};
     DefaultTableModel model = new DefaultTableModel(columns, 0);
     DBOperations operations = new DBOperations();
@@ -56,12 +55,12 @@ public class StudentPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
-        btnReport = new javax.swing.JButton();
+        buttonAdd_ = new javax.swing.JButton();
+        buttonEdit_ = new javax.swing.JButton();
+        buttonDelete_ = new javax.swing.JButton();
+        buttonReport_ = new javax.swing.JButton();
         btnProfile = new javax.swing.JButton();
-        btnRefresh = new javax.swing.JButton();
+        buttonRefresh_ = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,57 +173,57 @@ public class StudentPage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/plus.png"))); // NOI18N
-        btnAdd.setText("Incluir");
-        btnAdd.addMouseListener(new java.awt.event.MouseAdapter()
+        buttonAdd_.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/plus.png"))); // NOI18N
+        buttonAdd_.setText("Incluir");
+        buttonAdd_.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                btnAddMouseClicked(evt);
+                buttonAdd_MouseClicked(evt);
             }
         });
-        btnAdd.addActionListener(new java.awt.event.ActionListener()
+        buttonAdd_.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnAddActionPerformed(evt);
+                buttonAdd_ActionPerformed(evt);
             }
         });
 
-        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/pencil.png"))); // NOI18N
-        btnEdit.setText("Editar");
-        btnEdit.addMouseListener(new java.awt.event.MouseAdapter()
+        buttonEdit_.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/pencil.png"))); // NOI18N
+        buttonEdit_.setText("Editar");
+        buttonEdit_.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                btnEditMouseClicked(evt);
+                buttonEdit_MouseClicked(evt);
             }
         });
-        btnEdit.addActionListener(new java.awt.event.ActionListener()
+        buttonEdit_.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnEditActionPerformed(evt);
-            }
-        });
-
-        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/trash.png"))); // NOI18N
-        btnDelete.setText("Deletar");
-        btnDelete.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                btnDeleteActionPerformed(evt);
+                buttonEdit_ActionPerformed(evt);
             }
         });
 
-        btnReport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/printer.png"))); // NOI18N
-        btnReport.setText("Imprimir");
-        btnReport.addActionListener(new java.awt.event.ActionListener()
+        buttonDelete_.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/trash.png"))); // NOI18N
+        buttonDelete_.setText("Deletar");
+        buttonDelete_.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnReportActionPerformed(evt);
+                buttonDelete_ActionPerformed(evt);
+            }
+        });
+
+        buttonReport_.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/printer.png"))); // NOI18N
+        buttonReport_.setText("Imprimir");
+        buttonReport_.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                buttonReport_ActionPerformed(evt);
             }
         });
 
@@ -245,13 +244,13 @@ public class StudentPage extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonAdd_, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(btnEdit)
+                .addComponent(buttonEdit_)
                 .addGap(27, 27, 27)
-                .addComponent(btnDelete)
+                .addComponent(buttonDelete_)
                 .addGap(26, 26, 26)
-                .addComponent(btnReport)
+                .addComponent(buttonReport_)
                 .addGap(18, 18, 18)
                 .addComponent(btnProfile)
                 .addGap(0, 18, Short.MAX_VALUE))
@@ -262,28 +261,28 @@ public class StudentPage extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEdit)
-                    .addComponent(btnDelete)
-                    .addComponent(btnReport)
+                    .addComponent(buttonEdit_)
+                    .addComponent(buttonDelete_)
+                    .addComponent(buttonReport_)
                     .addComponent(btnProfile)
-                    .addComponent(btnAdd))
+                    .addComponent(buttonAdd_))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/loading.png"))); // NOI18N
-        btnRefresh.setText("Atualizar");
-        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter()
+        buttonRefresh_.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/loading.png"))); // NOI18N
+        buttonRefresh_.setText("Atualizar");
+        buttonRefresh_.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                btnRefreshMouseClicked(evt);
+                buttonRefresh_MouseClicked(evt);
             }
         });
-        btnRefresh.addActionListener(new java.awt.event.ActionListener()
+        buttonRefresh_.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnRefreshActionPerformed(evt);
+                buttonRefresh_ActionPerformed(evt);
             }
         });
 
@@ -303,7 +302,7 @@ public class StudentPage extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonRefresh_, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -323,7 +322,7 @@ public class StudentPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonRefresh_, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
@@ -368,7 +367,7 @@ public class StudentPage extends javax.swing.JFrame {
 
     private void tblDataMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblDataMouseClicked
     {//GEN-HEADEREND:event_tblDataMouseClicked
-      
+
     }//GEN-LAST:event_tblDataMouseClicked
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSearchActionPerformed
@@ -379,13 +378,13 @@ public class StudentPage extends javax.swing.JFrame {
             String query = "SELECT * FROM students WHERE username LIKE '%" + searchTxt + "%'";
             DBOperations operations = new DBOperations();
             operations.searchData(query, tblData, this);
-        } 
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtSearchKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_txtSearchKeyReleased
     {//GEN-HEADEREND:event_txtSearchKeyReleased
         String searchTxt = txtSearch.getText();
-            
+
         if (!searchTxt.isEmpty()) {
             String query = "SELECT * FROM students WHERE username LIKE '%" + searchTxt + "%'";
             DBOperations operations = new DBOperations();
@@ -397,15 +396,18 @@ public class StudentPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSearchKeyReleased
 
-    private void btnAddMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_btnAddMouseClicked
-    {//GEN-HEADEREND:event_btnAddMouseClicked
-        AddStudent addStudent = new AddStudent(new javax.swing.JFrame());
-        addStudent.setVisible(true);
-        addStudent.toFront();
-    }//GEN-LAST:event_btnAddMouseClicked
+    private void buttonAdd_MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_buttonAdd_MouseClicked
+    {//GEN-HEADEREND:event_buttonAdd_MouseClicked
 
-    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_btnRefreshMouseClicked
-    {//GEN-HEADEREND:event_btnRefreshMouseClicked
+    }//GEN-LAST:event_buttonAdd_MouseClicked
+
+    private void buttonRefresh_MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_buttonRefresh_MouseClicked
+    {//GEN-HEADEREND:event_buttonRefresh_MouseClicked
+
+    }//GEN-LAST:event_buttonRefresh_MouseClicked
+
+    private void buttonRefresh_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonRefresh_ActionPerformed
+    {//GEN-HEADEREND:event_buttonRefresh_ActionPerformed
         this.data = this.operations.Select();
         model.setNumRows(0);
 
@@ -414,46 +416,64 @@ public class StudentPage extends javax.swing.JFrame {
         }
 
         tblData.setModel(model);
-    }//GEN-LAST:event_btnRefreshMouseClicked
+    }//GEN-LAST:event_buttonRefresh_ActionPerformed
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnRefreshActionPerformed
-    {//GEN-HEADEREND:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditActionPerformed
-    {//GEN-HEADEREND:event_btnEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAddActionPerformed
-    {//GEN-HEADEREND:event_btnAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnEditMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_btnEditMouseClicked
-    {//GEN-HEADEREND:event_btnEditMouseClicked
-        if (tblData.getSelectionModel().isSelectionEmpty()) {
+    private void buttonEdit_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonEdit_ActionPerformed
+    {//GEN-HEADEREND:event_buttonEdit_ActionPerformed
+        if (!tblData.getSelectionModel().isSelectionEmpty()) {
+            Students selectedStudent = new Students(
+                    tblData.getValueAt(tblData.getSelectedRow(), 1).toString(),
+                    tblData.getValueAt(tblData.getSelectedRow(), 2).toString(),
+                    Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString())
+            );
+            
+            int selectedStudentId = Integer.parseInt(
+                    tblData.getValueAt(tblData.getSelectedRow(), 0).toString()
+            );
+            selectedStudent.setId(selectedStudentId);
+            
+            StudentActions addStudent = new StudentActions(
+                    new javax.swing.JFrame(), 
+                    "EDIT", selectedStudent
+            );
+            addStudent.setVisible(true);
+            addStudent.toFront();
+        } else {
             JOptionPane.showMessageDialog(this, "Erro: Selecione um item");
         }
-        
+
+        /*
         Students itemSelected = new Students(
-            tblData.getValueAt(tblData.getSelectedRow(), 1).toString(),
-            tblData.getValueAt(tblData.getSelectedRow(), 2).toString(),
-            Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString())
+                tblData.getValueAt(tblData.getSelectedRow(), 1).toString(),
+                tblData.getValueAt(tblData.getSelectedRow(), 2).toString(),
+                Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString())
         );
-        
-        EditStudent editPage = new EditStudent(
-                new javax.swing.JFrame(), 
+         */
+        //operations.getImage(tblData.getValueAt(tblData.getSelectedRow(), 0).toString());
+        /*EditStudent editPage = new EditStudent(
+                new javax.swing.JFrame(),
                 itemSelected,
                 Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 0).toString())
         );
         editPage.setVisible(true);
-        editPage.toFront();
-    }//GEN-LAST:event_btnEditMouseClicked
+        editPage.toFront();*/
+    }//GEN-LAST:event_buttonEdit_ActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnDeleteActionPerformed
-    {//GEN-HEADEREND:event_btnDeleteActionPerformed
+    private void buttonAdd_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonAdd_ActionPerformed
+    {//GEN-HEADEREND:event_buttonAdd_ActionPerformed
+        Students emptyStudent = new Students();
+        StudentActions addStudent = new StudentActions(new javax.swing.JFrame(), "ADD", emptyStudent);
+        addStudent.setVisible(true);
+        addStudent.toFront();
+    }//GEN-LAST:event_buttonAdd_ActionPerformed
+
+    private void buttonEdit_MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_buttonEdit_MouseClicked
+    {//GEN-HEADEREND:event_buttonEdit_MouseClicked
+
+    }//GEN-LAST:event_buttonEdit_MouseClicked
+
+    private void buttonDelete_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonDelete_ActionPerformed
+    {//GEN-HEADEREND:event_buttonDelete_ActionPerformed
         if (!tblData.getSelectionModel().isSelectionEmpty()) {
             int response = JOptionPane.showConfirmDialog(
                     this,
@@ -470,7 +490,7 @@ public class StudentPage extends javax.swing.JFrame {
                 student.setId(
                         Integer.parseInt(
                                 tblData.getValueAt(tblData.getSelectedRow(), 0)
-                                .toString()
+                                        .toString()
                         )
                 );
                 student.setUsername(
@@ -482,39 +502,39 @@ public class StudentPage extends javax.swing.JFrame {
                 student.setYear_of_entry(
                         Integer.parseInt(
                                 tblData.getValueAt(tblData.getSelectedRow(), 3)
-                                .toString()
+                                        .toString()
                         )
                 );
                 operations.Delete(student);
-                
+
             } else if (response == JOptionPane.NO_OPTION) {
                 JOptionPane.getRootFrame().dispose();
             }
         } else {
             JOptionPane.showMessageDialog(
-                    this, 
+                    this,
                     "ERRO: Selecione pelo menos um estudante"
             );
         }
-        
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnReportActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnReportActionPerformed
-    {//GEN-HEADEREND:event_btnReportActionPerformed
-        if(!tblData.getSelectionModel().isSelectionEmpty()) {
+    }//GEN-LAST:event_buttonDelete_ActionPerformed
+
+    private void buttonReport_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonReport_ActionPerformed
+    {//GEN-HEADEREND:event_buttonReport_ActionPerformed
+        if (!tblData.getSelectionModel().isSelectionEmpty()) {
             ArrayList<Students> student = new ArrayList<>();
             Students item = new Students();
             Report report = new Report();
-            
+
             item.setId(Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 0).toString()));
             item.setUsername(tblData.getValueAt(tblData.getSelectedRow(), 1).toString());
             item.setSubject(tblData.getValueAt(tblData.getSelectedRow(), 2).toString());
-            item.setYear_of_entry(Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString()));     
-            
+            item.setYear_of_entry(Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString()));
+
             student.add(item);
-            
+
             try {
-                report.generateReport(student);                 
+                report.generateReport(student);
             } catch (JRException error) {
                 error.printStackTrace();
             }
@@ -524,17 +544,18 @@ public class StudentPage extends javax.swing.JFrame {
                     "ERRO: Selecione pelo menos um estudante"
             );
         }
-    }//GEN-LAST:event_btnReportActionPerformed
+    }//GEN-LAST:event_buttonReport_ActionPerformed
 
     private void btnProfileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnProfileActionPerformed
     {//GEN-HEADEREND:event_btnProfileActionPerformed
         if (!tblData.getSelectionModel().isSelectionEmpty()) {
+            
             String id = tblData.getValueAt(tblData.getSelectedRow(), 0).toString();
             String pathImage = operations.getImage(id);
-            
+
             try {
                 java.awt.Desktop.getDesktop().open(
-                        new File(pathImage + id + ".jpg")
+                        new File(pathImage + id + ".jpeg")
                 );
             } catch (IOException ex) {
                 Logger.getLogger(StudentPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -542,17 +563,18 @@ public class StudentPage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Selecione pelo menos um usuário!");
         }
+
     }//GEN-LAST:event_btnProfileActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnProfile;
-    private javax.swing.JButton btnRefresh;
-    private javax.swing.JButton btnReport;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton buttonAdd_;
+    private javax.swing.JButton buttonDelete_;
+    private javax.swing.JButton buttonEdit_;
+    private javax.swing.JButton buttonRefresh_;
+    private javax.swing.JButton buttonReport_;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
