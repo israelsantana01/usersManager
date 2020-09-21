@@ -1,14 +1,19 @@
 package controllers;
 
 import connection.Database;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -20,12 +25,12 @@ public class DBOperations implements Operations {
     Students students = new Students();
 
     @Override
-    public boolean Insert(Object object)
+    public boolean Insert(Object object, InputStream image)
     {
         students = (Students) object;
         Connection connection;
         PreparedStatement PStatement;
-        String sql = "INSERT INTO STUDENTS VALUE(?, ?, ?, ?)";
+        String sql = "INSERT INTO STUDENTS VALUE(?, ?, ?, ?, ?)";
 
         try {
             Class.forName(database.getDriver());
@@ -40,6 +45,7 @@ public class DBOperations implements Operations {
             PStatement.setString(2, students.getUsername());
             PStatement.setString(3, students.getSubject());
             PStatement.setInt(4, students.getYear_of_entry());
+            PStatement.setBlob(5, image);
 
             int rows = PStatement.executeUpdate();
             if (rows > 0) {
@@ -166,7 +172,6 @@ public class DBOperations implements Operations {
     @Override
     public void searchData(String searchQuery, JTable table, JFrame frame)
     {
-        Database database = new Database();
         ResultSet result;
         Connection connection;
         try {
@@ -193,11 +198,11 @@ public class DBOperations implements Operations {
                             result.getString("subject"),
                             result.getString("year_of_entry")
                         };
-                        
+
                         tableModel.addRow(personObject);
-                    }    
-                } 
-                
+                    }
+                }
+
             } catch (Exception error) {
                 JOptionPane.showMessageDialog(frame, "Erro: " + error.getMessage());
             }
@@ -206,4 +211,49 @@ public class DBOperations implements Operations {
             JOptionPane.showMessageDialog(frame, "Erro de conexão: " + error.getMessage());
         }
     }
+
+    @Override
+    public String getImage(String id)
+    {
+        Statement statement = null;
+        Connection connection = null;
+        String pathImage = "C:\\Users\\corre\\Documents\\NetBeansProjects\\UsersManager\\image";
+        
+        try {
+            Class.forName(database.getDriver());
+            connection = DriverManager.getConnection(
+                    database.getUrl(), 
+                    database.getUsername(), 
+                    database.getPassword()
+            );
+            
+            String sql = "select * from students where id='" + id + "'";
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            
+            if (result.next()) {
+                Blob test = result.getBlob("image");
+                InputStream input = test.getBinaryStream();
+                int size = input.available();
+                OutputStream output = new FileOutputStream(
+                        pathImage + id + ".jpg"
+                );
+                
+                byte b[] = new byte[size];
+                input.read(b);
+                output.write(b);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception :" + e);
+        } finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return pathImage;
+    }
 }
+
