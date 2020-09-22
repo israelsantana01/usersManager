@@ -97,12 +97,12 @@ public class DBOperations implements Operations {
     }
 
     @Override
-    public boolean Update(Object object)
+    public boolean Update(Object object, InputStream image)
     {
         students = (Students) object;
         Connection connection;
         PreparedStatement PStatement;
-        String sql = "UPDATE STUDENTS SET USERNAME = ?, SUBJECT = ?, YEAR_OF_ENTRY = ? WHERE ID = ?";
+        String sql = "UPDATE STUDENTS SET USERNAME = ?, SUBJECT = ?, YEAR_OF_ENTRY = ?, IMAGE = ? WHERE ID = ?";
 
         try {
             Class.forName(database.getDriver());
@@ -116,7 +116,8 @@ public class DBOperations implements Operations {
             PStatement.setString(1, students.getUsername());
             PStatement.setString(2, students.getSubject());
             PStatement.setInt(3, students.getYear_of_entry());
-            PStatement.setInt(4, students.getId());
+            PStatement.setBlob(4, image);
+            PStatement.setInt(5, students.getId());
 
             int rows = PStatement.executeUpdate();
             if (rows > 0) {
@@ -218,7 +219,12 @@ public class DBOperations implements Operations {
         Statement statement = null;
         Connection connection = null;
         String so = String.valueOf(System.getProperty("os.name"));
-        String sourcePath = System.getProperty("user.dir");
+        String sourcePath = System.getProperty("user.dir") + "\\uploads";
+        
+        File directory = new File(
+               sourcePath
+        );
+        directory.mkdir();
 
         if (so.equals("Windows 10") || so.equals("Windows 7") || so.equals("Windows 8")) {
             sourcePath += "\\image";
@@ -257,7 +263,7 @@ public class DBOperations implements Operations {
                     System.out.println(e);
                 }
             }
-        } 
+        }
  
         return sourcePath;
     }

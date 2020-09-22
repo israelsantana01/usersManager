@@ -1,17 +1,12 @@
 package view;
 
 import controllers.DBOperations;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Students;
 import net.sf.jasperreports.engine.JRException;
-import pages.StudentActions;
 import report.Report;
 
 public class StudentPage extends javax.swing.JFrame {
@@ -59,7 +54,6 @@ public class StudentPage extends javax.swing.JFrame {
         buttonEdit_ = new javax.swing.JButton();
         buttonDelete_ = new javax.swing.JButton();
         buttonReport_ = new javax.swing.JButton();
-        btnProfile = new javax.swing.JButton();
         buttonRefresh_ = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -227,16 +221,6 @@ public class StudentPage extends javax.swing.JFrame {
             }
         });
 
-        btnProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/profilepng.png"))); // NOI18N
-        btnProfile.setText("Visualizar perfil");
-        btnProfile.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                btnProfileActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -251,9 +235,7 @@ public class StudentPage extends javax.swing.JFrame {
                 .addComponent(buttonDelete_)
                 .addGap(26, 26, 26)
                 .addComponent(buttonReport_)
-                .addGap(18, 18, 18)
-                .addComponent(btnProfile)
-                .addGap(0, 18, Short.MAX_VALUE))
+                .addGap(0, 182, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,7 +246,6 @@ public class StudentPage extends javax.swing.JFrame {
                     .addComponent(buttonEdit_)
                     .addComponent(buttonDelete_)
                     .addComponent(buttonReport_)
-                    .addComponent(btnProfile)
                     .addComponent(buttonAdd_))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -376,7 +357,6 @@ public class StudentPage extends javax.swing.JFrame {
 
         if (!searchTxt.isEmpty()) {
             String query = "SELECT * FROM students WHERE username LIKE '%" + searchTxt + "%'";
-            DBOperations operations = new DBOperations();
             operations.searchData(query, tblData, this);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -387,11 +367,9 @@ public class StudentPage extends javax.swing.JFrame {
 
         if (!searchTxt.isEmpty()) {
             String query = "SELECT * FROM students WHERE username LIKE '%" + searchTxt + "%'";
-            DBOperations operations = new DBOperations();
             operations.searchData(query, tblData, this);
         } else {
             String query = "SELECT * FROM students";
-            DBOperations operations = new DBOperations();
             operations.searchData(query, tblData, this);
         }
     }//GEN-LAST:event_txtSearchKeyReleased
@@ -441,22 +419,6 @@ public class StudentPage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Erro: Selecione um item");
         }
-
-        /*
-        Students itemSelected = new Students(
-                tblData.getValueAt(tblData.getSelectedRow(), 1).toString(),
-                tblData.getValueAt(tblData.getSelectedRow(), 2).toString(),
-                Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 3).toString())
-        );
-         */
-        //operations.getImage(tblData.getValueAt(tblData.getSelectedRow(), 0).toString());
-        /*EditStudent editPage = new EditStudent(
-                new javax.swing.JFrame(),
-                itemSelected,
-                Integer.parseInt(tblData.getValueAt(tblData.getSelectedRow(), 0).toString())
-        );
-        editPage.setVisible(true);
-        editPage.toFront();*/
     }//GEN-LAST:event_buttonEdit_ActionPerformed
 
     private void buttonAdd_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonAdd_ActionPerformed
@@ -484,7 +446,6 @@ public class StudentPage extends javax.swing.JFrame {
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                DBOperations operations = new DBOperations();
                 Students student = new Students();
 
                 student.setId(
@@ -546,29 +507,8 @@ public class StudentPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonReport_ActionPerformed
 
-    private void btnProfileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnProfileActionPerformed
-    {//GEN-HEADEREND:event_btnProfileActionPerformed
-        if (!tblData.getSelectionModel().isSelectionEmpty()) {
-            
-            String id = tblData.getValueAt(tblData.getSelectedRow(), 0).toString();
-            String pathImage = operations.getImage(id);
-
-            try {
-                java.awt.Desktop.getDesktop().open(
-                        new File(pathImage + id + ".jpeg")
-                );
-            } catch (IOException ex) {
-                Logger.getLogger(StudentPage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione pelo menos um usuário!");
-        }
-
-    }//GEN-LAST:event_btnProfileActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnProfile;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton buttonAdd_;
     private javax.swing.JButton buttonDelete_;

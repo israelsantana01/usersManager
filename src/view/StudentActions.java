@@ -1,19 +1,16 @@
-package pages;
+package view;
 
 import controllers.DBOperations;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Students;
-import view.StudentPage;
 
 public class StudentActions extends javax.swing.JDialog {
 
@@ -39,16 +36,20 @@ public class StudentActions extends javax.swing.JDialog {
                 inputUsername.setText(student.getUsername());
                 inputSubject.setText(student.getSubject());
                 inputYear.setText(Integer.toString(student.getYear_of_entry()));
+                buttonAddImage_.setText("Alterar imagem");
                 buttonSaveOrEdit_.setText("Salvar");
                 
-                //EXIBIR IMAGEM
                 String pathImage = operations.getImage(String.valueOf(id));
+                path = pathImage + id + ".jpeg";
                 
-                String path = pathImage + id + ".jpeg";
-
-                lblIcon.setIcon(new javax.swing.ImageIcon(path));
-                
-                
+                ImageIcon icon = new ImageIcon(
+                        new ImageIcon(path).getImage().getScaledInstance(
+                                lblIcon.getWidth(),
+                                lblIcon.getHeight(),
+                                Image.SCALE_DEFAULT
+                        )
+                );
+                lblIcon.setIcon(icon);
                 break;
         }
     }
@@ -225,21 +226,23 @@ public class StudentActions extends javax.swing.JDialog {
                         .addComponent(jLabel6)
                         .addGap(24, 24, 24)
                         .addComponent(inputYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(buttonAddImage_)
-                        .addGap(93, 93, 93))))
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
+                .addGap(68, 68, 68)
                 .addComponent(lblIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 122, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(buttonAddImage_)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,12 +255,11 @@ public class StudentActions extends javax.swing.JDialog {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(inputSubject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(inputYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAddImage_))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(inputYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 90, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -304,10 +306,10 @@ public class StudentActions extends javax.swing.JDialog {
 
             try {
                 image = new FileInputStream(new File(path));
-            } catch (Exception e) {
+            } catch (FileNotFoundException e) {
                 JOptionPane.showMessageDialog(this, "File not found");
             }
-            DBOperations operations = new DBOperations();
+        
             Students student = new Students(
                     inputUsername.getText(),
                     inputSubject.getText(),
@@ -322,14 +324,21 @@ public class StudentActions extends javax.swing.JDialog {
                 dispose();
             }
         } else {
-            DBOperations operations = new DBOperations();
-            Students studentAltered = new Students();
-            studentAltered.setId(this.id);
-            studentAltered.setUsername(inputUsername.getText());
-            studentAltered.setSubject(inputSubject.getText());
-            studentAltered.setYear_of_entry(Integer.parseInt(inputYear.getText()));
-
-            if (operations.Update(studentAltered)) {
+            Students alteredStudent = new Students();
+            InputStream image = null;
+            
+            try {
+                image = new FileInputStream(new File(path));
+            } catch (FileNotFoundException e) {
+                JOptionPane.showMessageDialog(this, "ERRO ao alterar a imagem");
+            }
+            
+            alteredStudent.setId(this.id);
+            alteredStudent.setUsername(inputUsername.getText());
+            alteredStudent.setSubject(inputSubject.getText());
+            alteredStudent.setYear_of_entry(Integer.parseInt(inputYear.getText()));
+            
+            if (operations.Update(alteredStudent, image)) {
                 JOptionPane.showMessageDialog(this, "Item atualizado com sucesso!");
                 dispose();
             } else {
@@ -337,7 +346,6 @@ public class StudentActions extends javax.swing.JDialog {
                 dispose();
             } 
         }
-       
     }//GEN-LAST:event_buttonSaveOrEdit_ActionPerformed
 
     private void buttonAddImage_ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_buttonAddImage_ActionPerformed
@@ -350,8 +358,8 @@ public class StudentActions extends javax.swing.JDialog {
 
         ImageIcon icon = new ImageIcon(
                 new ImageIcon(path).getImage().getScaledInstance(
-                        100,
-                        100,
+                        lblIcon.getWidth(),
+                        lblIcon.getHeight(),
                         Image.SCALE_DEFAULT
                 )
         );
