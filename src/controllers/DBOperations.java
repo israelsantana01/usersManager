@@ -217,44 +217,48 @@ public class DBOperations implements Operations {
     {
         Statement statement = null;
         Connection connection = null;
-        String username = System.getProperty("user.name");
-        String pathImage = "C:\\Users\\" + username + "\\Documents\\NetBeansProjects\\UsersManager\\image";
-        
-        try {
-            Class.forName(database.getDriver());
-            connection = DriverManager.getConnection(
-                    database.getUrl(), 
-                    database.getUsername(), 
-                    database.getPassword()
-            );
+        String so = String.valueOf(System.getProperty("os.name"));
+        String sourcePath = System.getProperty("user.dir");
+
+        if (so.equals("Windows 10") || so.equals("Windows 7") || so.equals("Windows 8")) {
+            sourcePath += "\\image";
             
-            String sql = "select * from students where id='" + id + "'";
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            
-            if (result.next()) {
-                Blob test = result.getBlob("image");
-                InputStream input = test.getBinaryStream();
-                int size = input.available();
-                OutputStream output = new FileOutputStream(
-                        pathImage + id + ".jpeg"
-                );
-                
-                byte b[] = new byte[size];
-                input.read(b);
-                output.write(b);
-            }
-        } catch (Exception e) {
-            System.out.println("Exception :" + e);
-        } finally {
             try {
-                statement.close();
-                connection.close();
+                Class.forName(database.getDriver());
+                connection = DriverManager.getConnection(
+                        database.getUrl(),
+                        database.getUsername(),
+                        database.getPassword()
+                );
+
+                String sql = "select * from students where id='" + id + "'";
+                statement = connection.createStatement();
+                ResultSet result = statement.executeQuery(sql);
+
+                if (result.next()) {
+                    Blob test = result.getBlob("image");
+                    InputStream input = test.getBinaryStream();
+                    int size = input.available();
+                    OutputStream output = new FileOutputStream(
+                            sourcePath + id + ".jpeg"
+                    );
+
+                    byte b[] = new byte[size];
+                    input.read(b);
+                    output.write(b);
+                }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println("Exception :" + e);
+            } finally {
+                try {
+                    statement.close();
+                    connection.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
-        }
-        return pathImage;
+        } 
+ 
+        return sourcePath;
     }
 }
-

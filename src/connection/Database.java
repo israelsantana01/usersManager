@@ -10,7 +10,7 @@ public class Database {
        this.url = "jdbc:mysql://localhost:3306/sampledb?useTimezone=true&serverTimezone=UTC";
        this.username = "root";
        this.password = "";
-       this.driver = "com.mysql.jdbc.Driver";
+       this.driver = "com.mysql.cj.jdbc.Driver";
    }
 
     public String getUrl()
