@@ -1,3 +1,4 @@
+import { Connection } from "mysql";
 const mysql = require('mysql');
 
 export const connection =  mysql.createConnection({
@@ -6,4 +7,14 @@ export const connection =  mysql.createConnection({
     password: '',
     database: 'sampledb'
 });
+
+export function verifyConnection(connection: Connection) {
+    connection.connect((error: Error) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Connected...');
+        }
+    }); 
+}
 
