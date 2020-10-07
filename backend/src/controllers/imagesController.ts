@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import mysql from 'mysql';
 
 const path = require('path');
+const ip = require('ip');
 const fs = require('fs');
 
 import { connection } from '../connection/connection';
@@ -22,10 +23,11 @@ class ImagesController {
                     fs.writeFileSync(path.resolve(__dirname, '..', 'uploads', `${outputfile}`), buf);
 
                     const user = {
+                        id: item.id,
                         username: item.username,
                         subject: item.subject,
                         year_of_entry: item.year_of_entry,
-                        image_url: `http://192.168.18.144:3333/uploads/${imageName}`
+                        image_url: `http://${ip.address()}:3333/uploads/${imageName}`
                     }
 
                     users.push(user);
