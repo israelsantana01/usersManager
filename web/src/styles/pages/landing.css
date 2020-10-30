@@ -42,6 +42,12 @@
     margin: auto;
 }
 
+.search-group {
+    flex-direction: column;
+    width: 45%;
+}
+
+
 
 
 

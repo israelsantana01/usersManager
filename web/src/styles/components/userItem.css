@@ -13,16 +13,6 @@
     box-shadow: 0 0 40px -10px rgba(0, 0, 0, 0.25);
 }
 
-.card-header {
-    width: 100%;
-    height: 150px;
-}
-
-.card-header img {
-    width: 100%;
-    height: 100%;
-}
-
 .card-body {
     display: flex;
     justify-content: center;
@@ -32,11 +22,12 @@
     font-size: 1rem;
 }
 
-.card-body-content {
+.card-content {
     display: flex;
     align-items: center;
+    justify-content: center
 }
 
-.card-body-content h4 {
+.card-content h5 {
     margin-right: 4px;
 }
